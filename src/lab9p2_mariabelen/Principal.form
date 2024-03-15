@@ -50,7 +50,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jProgressBar1" min="-2" pref="284" max="-2" attributes="0"/>
+                              <Component id="jbarra" min="-2" pref="284" max="-2" attributes="0"/>
                               <Component id="j_SubirArchivo" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -76,7 +76,7 @@
                   <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                   <Component id="j_SubirArchivo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jProgressBar1" min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="jbarra" min="-2" pref="23" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -201,7 +201,7 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="j_SubirArchivoMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JProgressBar" name="jProgressBar1">
+        <Component class="javax.swing.JProgressBar" name="jbarra">
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
           <AuxValues>

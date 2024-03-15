@@ -55,7 +55,7 @@ public class Principal extends javax.swing.JFrame {
         jl_fecha = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         j_SubirArchivo = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        jbarra = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArchivo = new javax.swing.JTextArea();
         jButton_guardar = new javax.swing.JButton();
@@ -155,7 +155,7 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbarra, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(j_SubirArchivo)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
@@ -174,7 +174,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addComponent(j_SubirArchivo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbarra, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -192,79 +192,14 @@ public class Principal extends javax.swing.JFrame {
     private void j_SubirArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_SubirArchivoMouseClicked
         // TODO add your handling code here:
         
-                FileReader fr = null;
-        BufferedReader br = null;
-        jTextArchivo.setText("");
-        try {
-            JFileChooser jfc = new JFileChooser("./");// donde quiero que arramque
-            FileNameExtensionFilter filtro = 
-                    new FileNameExtensionFilter(
-                            "Archivos de Texto", "txt");
-            jfc.setFileFilter(filtro);
-            int seleccion = jfc.showOpenDialog(this);
-            if (seleccion == JFileChooser.APPROVE_OPTION)
-            {
-               fichero = jfc.getSelectedFile();
-               fr = new FileReader(fichero);
-               br=new BufferedReader(fr);
-               String linea;
-               jTextArchivo.setText("");
-               while(  (linea=br.readLine()) !=null  ){                    
-                    jTextArchivo.append(linea);
-                    jTextArchivo.append("\n");
-                }
-            } //fin if
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            br.close();
-            fr.close();
-        } catch (IOException ex) {
-        }
+        HiloBarra b = new HiloBarra(jbarra,jTextArchivo);
+        Thread proceso3 = new Thread(b);
+        proceso3.start();
 
     }//GEN-LAST:event_j_SubirArchivoMouseClicked
 
     private void jButton_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_guardarMouseClicked
         // TODO add your handling code here:
-//        
-//        JFileChooser jfc = new JFileChooser();
-//        FileNameExtensionFilter filtro = 
-//                    new FileNameExtensionFilter(
-//                            "Archivos de Texto", "txt");
-//         jfc.addChoosableFileFilter(filtro); 
-//        int seleccion = jfc.showSaveDialog(this);        
-//        FileWriter fw = null;
-//        BufferedWriter bw = null;
-//        if (seleccion == JFileChooser.APPROVE_OPTION) {
-//             try {
-//                 
-//                  File fichero=null;
-//                if (jfc.getFileFilter().getDescription().equals(
-//                        "Archivos de Texto")) {
-//                    fichero = 
-//                        new File(jfc.getSelectedFile().getPath()+".txt");
-//                }else{
-//                    fichero = jfc.getSelectedFile();
-//                }                             
-//                fw = new FileWriter(fichero);
-//                bw = new BufferedWriter(fw);
-//                bw.write(jTextArchivo.getText());
-//                jTextArchivo.setText("");
-//                bw.flush();         
-//                JOptionPane.showMessageDialog(this, 
-//                        "Archivo guardado exitosamente");  
-//                
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            try {
-//                    bw.close();
-//                    fw.close();
-//                } catch (IOException ex) {
-//           }                     
-//        }
 
         AdmiArchivo ad = new AdmiArchivo(fichero.getPath(), jTextArchivo);
         ad.cargarArchivo();
@@ -273,6 +208,10 @@ public class Principal extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        jTextArchivo.setText("");
+        
+        
+        
 
     }//GEN-LAST:event_jButton_guardarMouseClicked
 
@@ -322,10 +261,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArchivo;
     private javax.swing.JButton j_SubirArchivo;
+    private javax.swing.JProgressBar jbarra;
     private javax.swing.JLabel jl_fecha;
     private javax.swing.JLabel jl_hora;
     // End of variables declaration//GEN-END:variables
