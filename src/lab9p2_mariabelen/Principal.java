@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -190,8 +192,7 @@ public class Principal extends javax.swing.JFrame {
     private void j_SubirArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_SubirArchivoMouseClicked
         // TODO add your handling code here:
         
-        File fichero = null;
-        FileReader fr = null;
+                FileReader fr = null;
         BufferedReader br = null;
         jTextArchivo.setText("");
         try {
@@ -227,43 +228,52 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_guardarMouseClicked
         // TODO add your handling code here:
-        
-        JFileChooser jfc = new JFileChooser();
-        FileNameExtensionFilter filtro = 
-                    new FileNameExtensionFilter(
-                            "Archivos de Texto", "txt");
-         jfc.addChoosableFileFilter(filtro); // tipo en especifico
-        int seleccion = jfc.showSaveDialog(this);        
-        FileWriter fw = null;
-        BufferedWriter bw = null;
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
-             try {
-                 
-                  File fichero=null;
-                if (jfc.getFileFilter().getDescription().equals(
-                        "Archivos de Texto")) {
-                    fichero = 
-                        new File(jfc.getSelectedFile().getPath()+".txt");
-                }else{
-                    fichero = jfc.getSelectedFile();
-                }                             
-                fw = new FileWriter(fichero);
-                bw = new BufferedWriter(fw);
-                bw.write(jTextArchivo.getText());
-                jTextArchivo.setText("");
-                bw.flush();         
-                JOptionPane.showMessageDialog(this, 
-                        "Archivo guardado exitosamente");  
-                
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                    bw.close();
-                    fw.close();
-                } catch (IOException ex) {
-           }                     
+//        
+//        JFileChooser jfc = new JFileChooser();
+//        FileNameExtensionFilter filtro = 
+//                    new FileNameExtensionFilter(
+//                            "Archivos de Texto", "txt");
+//         jfc.addChoosableFileFilter(filtro); 
+//        int seleccion = jfc.showSaveDialog(this);        
+//        FileWriter fw = null;
+//        BufferedWriter bw = null;
+//        if (seleccion == JFileChooser.APPROVE_OPTION) {
+//             try {
+//                 
+//                  File fichero=null;
+//                if (jfc.getFileFilter().getDescription().equals(
+//                        "Archivos de Texto")) {
+//                    fichero = 
+//                        new File(jfc.getSelectedFile().getPath()+".txt");
+//                }else{
+//                    fichero = jfc.getSelectedFile();
+//                }                             
+//                fw = new FileWriter(fichero);
+//                bw = new BufferedWriter(fw);
+//                bw.write(jTextArchivo.getText());
+//                jTextArchivo.setText("");
+//                bw.flush();         
+//                JOptionPane.showMessageDialog(this, 
+//                        "Archivo guardado exitosamente");  
+//                
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            try {
+//                    bw.close();
+//                    fw.close();
+//                } catch (IOException ex) {
+//           }                     
+//        }
+
+        AdmiArchivo ad = new AdmiArchivo(fichero.getPath(), jTextArchivo);
+        ad.cargarArchivo();
+        try {
+            ad.escribirArchivo();
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_jButton_guardarMouseClicked
 
     /**
@@ -300,6 +310,8 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }
+    File fichero = null;
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_guardar;
