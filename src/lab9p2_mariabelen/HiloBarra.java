@@ -16,6 +16,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class HiloBarra implements Runnable{
     private JProgressBar barra;
     JTextArea text;
+     File fichero=null;
     
 
     public HiloBarra() {
@@ -34,10 +35,10 @@ public class HiloBarra implements Runnable{
     @Override
     public void run() {
         FileReader fr = null;
-        File fichero = null;
+        //File fichero = null;
         BufferedReader br = null;
         text.setText("");
-            JFileChooser jfc = new JFileChooser("./");// donde quiero que arramque
+            JFileChooser jfc = new JFileChooser("./");
             FileNameExtensionFilter filtro = 
                     new FileNameExtensionFilter(
                             "Archivos de Texto", "txt");
@@ -79,6 +80,9 @@ public class HiloBarra implements Runnable{
             } 
         
     }
+   public File getFichero (){
+       return fichero;
    
+   }
     
 }
