@@ -4,6 +4,13 @@
  */
 package lab9p2_mariabelen;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author belen
@@ -42,10 +49,10 @@ public class Principal extends javax.swing.JFrame {
         jl_hora = new javax.swing.JLabel();
         jl_fecha = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        j_SubirArchivo = new javax.swing.JButton();
         jProgressBar1 = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextArchivo = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
@@ -84,11 +91,12 @@ public class Principal extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jl_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addComponent(jl_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jl_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -96,24 +104,29 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addComponent(jLabel3)
-                .addGap(28, 28, 28)
+                .addGap(34, 34, 34)
                 .addComponent(jLabel4)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jl_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
                 .addGap(46, 46, 46)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jl_hora, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel1.setText("Boroa Cloud");
 
-        jButton1.setText("Subir Archivo");
+        j_SubirArchivo.setText("Subir Archivo");
+        j_SubirArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                j_SubirArchivoMouseClicked(evt);
+            }
+        });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextArchivo.setColumns(20);
+        jTextArchivo.setRows(5);
+        jScrollPane1.setViewportView(jTextArchivo);
 
         jButton2.setText("Guardar");
 
@@ -133,7 +146,7 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(34, 34, 34)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)))
+                            .addComponent(j_SubirArchivo)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,7 +162,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addComponent(jButton1)
+                .addComponent(j_SubirArchivo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
@@ -165,6 +178,48 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void j_SubirArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_j_SubirArchivoMouseClicked
+        // TODO add your handling code here:
+        
+        File fichero = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+        jTextArchivo.setText("");
+        try {
+            JFileChooser jfc = new JFileChooser("./");// donde quiero que arramque
+            FileNameExtensionFilter filtro = 
+                    new FileNameExtensionFilter(
+                            "Archivos de Texto", "txt");
+            FileNameExtensionFilter filtro2 = 
+                new FileNameExtensionFilter(
+                        "Imagenes", "jpg", "png", "bmp");
+            jfc.setFileFilter(filtro);// queda por defecto
+            jfc.addChoosableFileFilter(filtro2); // va poniendolo hasta el final           
+            int seleccion = jfc.showOpenDialog(this);
+            if (seleccion == JFileChooser.APPROVE_OPTION)
+            {
+               fichero = jfc.getSelectedFile();
+               fr = new FileReader(fichero);
+               br=new BufferedReader(fr);
+               String linea;
+               jTextArchivo.setText("");
+               while(  (linea=br.readLine()) !=null  ){                    
+                    jTextArchivo.append(linea);// el metodo respeta el texto, y va adicionado al final del textArea
+                    jTextArchivo.append("\n");
+                }
+            } //fin if
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            br.close();
+            fr.close();
+        } catch (IOException ex) {
+        }
+
+    }//GEN-LAST:event_j_SubirArchivoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -202,7 +257,6 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -213,7 +267,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArchivo;
+    private javax.swing.JButton j_SubirArchivo;
     private javax.swing.JLabel jl_fecha;
     private javax.swing.JLabel jl_hora;
     // End of variables declaration//GEN-END:variables
