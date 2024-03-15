@@ -5,10 +5,13 @@
 package lab9p2_mariabelen;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -53,7 +56,7 @@ public class Principal extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArchivo = new javax.swing.JTextArea();
-        jButton2 = new javax.swing.JButton();
+        jButton_guardar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -128,7 +131,12 @@ public class Principal extends javax.swing.JFrame {
         jTextArchivo.setRows(5);
         jScrollPane1.setViewportView(jTextArchivo);
 
-        jButton2.setText("Guardar");
+        jButton_guardar.setText("Guardar");
+        jButton_guardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_guardarMouseClicked(evt);
+            }
+        });
 
         jLabel2.setText("Archivo");
 
@@ -150,7 +158,7 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
+                            .addComponent(jButton_guardar)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))))
                 .addGap(0, 56, Short.MAX_VALUE))
@@ -170,7 +178,7 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(jButton_guardar)
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
@@ -191,11 +199,7 @@ public class Principal extends javax.swing.JFrame {
             FileNameExtensionFilter filtro = 
                     new FileNameExtensionFilter(
                             "Archivos de Texto", "txt");
-            FileNameExtensionFilter filtro2 = 
-                new FileNameExtensionFilter(
-                        "Imagenes", "jpg", "png", "bmp");
-            jfc.setFileFilter(filtro);// queda por defecto
-            jfc.addChoosableFileFilter(filtro2); // va poniendolo hasta el final           
+            jfc.setFileFilter(filtro);
             int seleccion = jfc.showOpenDialog(this);
             if (seleccion == JFileChooser.APPROVE_OPTION)
             {
@@ -205,7 +209,7 @@ public class Principal extends javax.swing.JFrame {
                String linea;
                jTextArchivo.setText("");
                while(  (linea=br.readLine()) !=null  ){                    
-                    jTextArchivo.append(linea);// el metodo respeta el texto, y va adicionado al final del textArea
+                    jTextArchivo.append(linea);
                     jTextArchivo.append("\n");
                 }
             } //fin if
@@ -220,6 +224,47 @@ public class Principal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_j_SubirArchivoMouseClicked
+
+    private void jButton_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_guardarMouseClicked
+        // TODO add your handling code here:
+        
+        JFileChooser jfc = new JFileChooser();
+        FileNameExtensionFilter filtro = 
+                    new FileNameExtensionFilter(
+                            "Archivos de Texto", "txt");
+         jfc.addChoosableFileFilter(filtro); // tipo en especifico
+        int seleccion = jfc.showSaveDialog(this);        
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+             try {
+                 
+                  File fichero=null;
+                if (jfc.getFileFilter().getDescription().equals(
+                        "Archivos de Texto")) {
+                    fichero = 
+                        new File(jfc.getSelectedFile().getPath()+".txt");
+                }else{
+                    fichero = jfc.getSelectedFile();
+                }                             
+                fw = new FileWriter(fichero);
+                bw = new BufferedWriter(fw);
+                bw.write(jTextArchivo.getText());
+                jTextArchivo.setText("");
+                bw.flush();         
+                JOptionPane.showMessageDialog(this, 
+                        "Archivo guardado exitosamente");  
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                    bw.close();
+                    fw.close();
+                } catch (IOException ex) {
+           }                     
+        }
+    }//GEN-LAST:event_jButton_guardarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -257,7 +302,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton_guardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
